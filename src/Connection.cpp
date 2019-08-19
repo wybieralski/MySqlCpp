@@ -13,10 +13,17 @@ Connection::Connection() {
     SOCKET = "/var/run/mysqld/mysqld.sock";
 }
 
+void Connection::insert(std::string table, std::string value)
+{
+    std::string str = "INSERT INTO "+table+" VALUES "+value;
+    const char *insert_command = str.c_str();
+    if (mysql_query(CONN, insert_command)) {
+        finish_with_error(CONN);
+    }
+}
 
 void Connection::finish_with_error(MYSQL *con)
 {
-    fprintf(stderr, "%s\n", mysql_error(con));
     std::cerr << mysql_error(CONN) << std::endl;
     mysql_close(con);
 }
@@ -30,37 +37,11 @@ void Connection::fill_database(){
         finish_with_error(CONN);
     }
 
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(1,' Audi ',122121)")) {
-        finish_with_error(CONN);
-    }
-
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(2,' Mercedes ',57127)")) {
-        finish_with_error(CONN);
-    }
-
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(3,' Skoda ',9000)")) {
-        finish_with_error(CONN);
-    }
-
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(4,' Volvo ',29000)")) {
-        finish_with_error(CONN);
-    }
-
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(5,' Bentley ',350000)")) {
-        finish_with_error(CONN);
-    }
-
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(6,' Citroen ',21000)")) {
-        finish_with_error(CONN);
-    }
-
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(7,' Hummer ',41400)")) {
-        finish_with_error(CONN);
-    }
-
-    if (mysql_query(CONN, "INSERT INTO Cars VALUES(8,' Volkswagen ',21600)")) {
-        finish_with_error(CONN);
-    }
+    insert("Cars","(1,' Trabant ',2)");
+    insert("Cars","(3,' Skoda ',9000)");
+    insert("Cars","(2,' Mercedes ',57127)");
+    insert("Cars","(4,' Volvo ',29000)");
+    insert("Cars","(5,' Bentley ',350000)");
 }
 
 void Connection::create_database(const std::string database_name){
@@ -87,7 +68,7 @@ void Connection::show_tables(){
 
 void Connection::select_arg1_from_arg2(const std::string arg1,const std::string arg2){
     /**   SELECT X FROM X   **/
-    std::cout<<"SELECT x FROM x"<<std::endl;
+
     std::string str = "SELECT "+arg1+" FROM "+arg2;
     const char *select_command = str.c_str();
     if (mysql_query(CONN, select_command))
@@ -107,9 +88,7 @@ void Connection::select_arg1_from_arg2(const std::string arg1,const std::string 
 
         std::cout<<std::endl;
     }
-
 }
-
 
 bool Connection::execute(){
 

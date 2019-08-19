@@ -1,20 +1,18 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
-project(Test)
+project(MySqlCpp)
 
+set(CMAKE_CXX_STANDARD 17)
 
-set(Sources src/Connection.cpp)
-set(Headers src/Connection.h)
-add_executable(exe2 main.cpp ${Sources} ${Headers})
+set(SOURCE_FILES main.cpp)
+add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCE_FILES})
 
+include_directories(src)
 
-add_executable(app main.cpp
-        src/Connection.cpp
-        src/Connection.h
-        )
+add_subdirectory(src)
+add_subdirectory(tests)
 
-target_link_libraries(app
-        mysqlclient)
-
-target_link_libraries(exe2
-        mysqlclient)
-
+target_link_libraries(
+        ${CMAKE_PROJECT_NAME}_run
+        ${CMAKE_PROJECT_NAME}_lib
+        mysqlclient
+)

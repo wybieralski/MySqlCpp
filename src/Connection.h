@@ -24,4 +24,5 @@ class Connection{
         void finish_with_error(MYSQL *con);
         void show_tables();
         void select_arg1_from_arg2(const std::string arg1,const std::string arg2);
+        void insert(std::string table, std::string value);
 };

@@ -2,12 +2,11 @@
 #include <string>
 #include <mysql/mysql.h>
 
-#include "Connection.h"
+#include "src/Connection.h"
 
 int main()
 {
     try{
-
         Connection objConn;
         bool result = objConn.execute();
         if (!result) std::cout << "ERROR!!!!" <<std::endl;

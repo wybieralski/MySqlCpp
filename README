@@ -1,1 +1,10 @@
 Simple app using MySql written in C++
+
+FUNCTIONALITIES
+------------
+
+*Create database
+
+*Insert into database
+
+*Select from database
